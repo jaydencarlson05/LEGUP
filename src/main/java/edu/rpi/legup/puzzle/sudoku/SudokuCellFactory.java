@@ -1,5 +1,6 @@
 package edu.rpi.legup.puzzle.sudoku;
 
+import edu.rpi.legup.model.Goal;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
@@ -51,6 +52,7 @@ public class SudokuCellFactory extends ElementFactory {
             throw new InvalidFileFormatException("Sudoku Factory: could not find attribute(s)");
         }
     }
+
 
     /**
      * Creates a xml document puzzleElement from a cell for exporting

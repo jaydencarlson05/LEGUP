@@ -170,6 +170,7 @@ public abstract class PuzzleImporter {
         return elements;
     }
 
+
     /**
      * Creates the proof for building
      *
@@ -432,6 +433,7 @@ public abstract class PuzzleImporter {
                     Board board = transition.getBoard();
                     PuzzleElement cell = puzzle.getFactory().importCell(node, board);
 
+                    cell.setGoal(board.getPuzzleElement(cell).isGoal());
                     board.setPuzzleElement(cell.getIndex(), cell);
                     board.addModifiedData(cell);
                     transition.propagateChange(cell);

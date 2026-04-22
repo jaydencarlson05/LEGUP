@@ -1,6 +1,8 @@
 package edu.rpi.legup.model;
 
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+import edu.rpi.legup.model.gameboard.GridBoard;
+import edu.rpi.legup.model.gameboard.GridCell;
 import edu.rpi.legup.model.tree.TreeNode;
 import edu.rpi.legup.model.tree.TreeTransition;
 import edu.rpi.legup.save.ExportFileException;
@@ -99,8 +101,9 @@ public abstract class PuzzleExporter {
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document newDocument = docBuilder.newDocument();
 
+            // hardcoded version number
             org.w3c.dom.Element legupElement = newDocument.createElement("Legup");
-            legupElement.setAttribute("version", "3.0.0");
+            legupElement.setAttribute("version", "6.1.0");
             newDocument.appendChild(legupElement);
 
             org.w3c.dom.Element puzzleElement = newDocument.createElement("puzzle");
@@ -137,9 +140,6 @@ public abstract class PuzzleExporter {
             transformer.transform(source, result);
         } catch (ParserConfigurationException | TransformerException e) {
             throw new ExportFileException("Puzzle Exporter: parser configuration exception");
-        } catch (Exception e) {
-            throw e;
-            // throw new ExportFileException(e.getMessage());
         }
     }
 
@@ -151,6 +151,54 @@ public abstract class PuzzleExporter {
      * @return An XML element representing the puzzle's board.
      */
     protected abstract Element createBoardElement(Document newDocument);
+
+    /**
+     * Appends a goal element to the board export based on currently goal-marked cells.
+     *
+     * @param newDocument XML document
+     * @param boardElement board XML element
+     * @param board grid board to read goal-marked cells from
+     */
+    protected void appendGoalElement(
+            Document newDocument, Element boardElement, GridBoard board) {
+        GoalType goalType =
+                puzzle.getGoal() == null ? GoalType.DEFAULT : puzzle.getGoal().getType();
+
+        if (goalType == GoalType.DEFAULT) {
+            return;
+        }
+
+        Element goalElement = newDocument.createElement("goal");
+        goalElement.setAttribute("type", String.valueOf(goalType));
+        goalElement.setAttribute("assumeSolution", String.valueOf(puzzle.getGoal().assumeSolution()));
+
+        boolean hasGoalCells = false;
+
+        for (PuzzleElement puzzleElement : board.getPuzzleElements()) {
+            if (puzzleElement instanceof GridCell gridCell && gridCell.isGoal()) {
+                // Create a temporary cell with goal data for exporting
+                GridCell exportCell = (GridCell) gridCell.copy();
+                if (gridCell.getGoalData() != null) {
+                    exportCell.setData(gridCell.getGoalData());
+                }
+                Element cellElement = puzzle.getFactory().exportCell(newDocument, exportCell);
+                goalElement.appendChild(cellElement);
+                hasGoalCells = true;
+            }
+        }
+
+        if (!hasGoalCells && puzzle.getGoal().assumeSolution() && puzzle.getGoal() != null) {
+            for (GridCell goalCell : puzzle.getGoal().getCells()) {
+                Element cellElement = puzzle.getFactory().exportCell(newDocument, goalCell);
+                goalElement.appendChild(cellElement);
+                hasGoalCells = true;
+            }
+        }
+
+        if (hasGoalCells || !puzzle.getGoal().assumeSolution()) {
+            boardElement.appendChild(goalElement);
+        }
+    }
 
     /**
      * Creates an XML element representing the proof of the puzzle, including its tree structure.

@@ -4,6 +4,8 @@ import edu.rpi.legup.model.elements.Element;
 import edu.rpi.legup.model.gameboard.GridCell;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+
+import edu.rpi.legup.puzzle.masyu.MasyuType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -68,6 +70,18 @@ public class MinesweeperCell extends GridCell<MinesweeperTileData> {
         copy.setIndex(index);
         copy.setModifiable(isModifiable);
         copy.setGiven(isGiven);
+        copy.setGoal(isGoal);
         return copy;
+    }
+
+    @Override
+    public boolean isKnown() {return !(data == MinesweeperTileData.unset());}
+
+    @Override
+    public String describeState(boolean isPlural) {
+        if (data.type() == MinesweeperTileType.MINE) {
+            return isPlural ? "mines" : "a mine";
+        }
+        return isPlural ? "not mines" : "not a mine";
     }
 }

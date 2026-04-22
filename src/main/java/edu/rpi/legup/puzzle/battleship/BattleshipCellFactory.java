@@ -1,5 +1,6 @@
 package edu.rpi.legup.puzzle.battleship;
 
+import edu.rpi.legup.model.Goal;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
@@ -54,6 +55,7 @@ public class BattleshipCellFactory extends ElementFactory {
             throw new InvalidFileFormatException("BattleShip Factory: could not find attribute(s)");
         }
     }
+
 
     /**
      * Creates a xml document puzzleElement from a cell for exporting

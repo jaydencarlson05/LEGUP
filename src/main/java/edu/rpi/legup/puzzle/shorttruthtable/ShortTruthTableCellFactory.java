@@ -1,10 +1,10 @@
 package edu.rpi.legup.puzzle.shorttruthtable;
 
+import edu.rpi.legup.model.Goal;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
 import edu.rpi.legup.save.InvalidFileFormatException;
-import java.awt.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -51,6 +51,7 @@ public class ShortTruthTableCellFactory extends ElementFactory {
             throw new InvalidFileFormatException("nurikabe Factory: could not find attribute(s)");
         }
     }
+
 
     /**
      * Creates a xml document puzzleElement from a cell for exporting

@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Objects;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,6 +53,8 @@ public class ProofEditorPanel extends LegupPanel implements IHistoryListener {
     private JFrame frame;
     private RuleFrame ruleFrame;
     private DynamicView dynamicBoardView;
+    private JTextArea goalText;
+    private JPanel boardSidePanel;
     private JSplitPane topHalfPanel, mainPanel;
     private TitledBorder boardBorder;
     private JButton[] toolBar1Buttons;
@@ -805,9 +809,27 @@ public class ProofEditorPanel extends LegupPanel implements IHistoryListener {
         titleBoard.setTitleJustification(TitledBorder.CENTER);
         dynamicBoardView.setBorder(titleBoard);
 
+        goalText = new JTextArea();
+        goalText.setRows(2);
+        goalText.setEditable(false);
+        goalText.setOpaque(false);
+        goalText.setFocusable(false);
+        goalText.setLineWrap(true);
+        goalText.setWrapStyleWord(true);
+        JScrollPane goalPane = new JScrollPane(goalText);
+        CompoundBorder goalBorder = new CompoundBorder(
+                BorderFactory.createTitledBorder("Goal Condition"),
+                new EmptyBorder(0, 5, 5, 5));
+        ((TitledBorder) goalBorder.getOutsideBorder()).setTitleJustification(TitledBorder.CENTER);
+        goalPane.setBorder(goalBorder);
+
+        boardSidePanel = new JPanel(new BorderLayout());
+        boardSidePanel.add(goalPane, BorderLayout.NORTH);
+        boardSidePanel.add(dynamicBoardView);
+
         JPanel boardPanel = new JPanel(new BorderLayout());
         topHalfPanel =
-                new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, ruleFrame, dynamicBoardView);
+                new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, true, ruleFrame, boardSidePanel);
         mainPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, true, topHalfPanel, treePanel);
         topHalfPanel.setPreferredSize(new Dimension(600, 400));
         mainPanel.setPreferredSize(new Dimension(600, 600));
@@ -1091,9 +1113,9 @@ public class ProofEditorPanel extends LegupPanel implements IHistoryListener {
     public void setPuzzleView(Puzzle puzzle) {
         this.boardView = puzzle.getBoardView();
 
+        boardSidePanel.remove(dynamicBoardView);
         dynamicBoardView = new DynamicView(boardView, DynamicViewType.BOARD);
-        this.topHalfPanel.setRightComponent(dynamicBoardView);
-        this.topHalfPanel.setVisible(true);
+        boardSidePanel.add(dynamicBoardView);
         String boardType = boardView.getBoard().getClass().getSimpleName();
         boardType = boardType.substring(0, boardType.indexOf("Board"));
         TitledBorder titleBoard = BorderFactory.createTitledBorder(boardType + " Board");
@@ -1266,6 +1288,14 @@ public class ProofEditorPanel extends LegupPanel implements IHistoryListener {
      */
     public TreePanel getTreePanel() {
         return treePanel;
+    }
+
+    public String getGoalText() {
+        return goalText.getText();
+    }
+
+    public void setGoalText(String text) {
+        goalText.setText(text);
     }
 
     /**

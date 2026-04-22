@@ -1,5 +1,6 @@
 package edu.rpi.legup.puzzle.masyu;
 
+import edu.rpi.legup.model.Goal;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;

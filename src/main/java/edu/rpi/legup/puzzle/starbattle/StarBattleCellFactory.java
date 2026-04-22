@@ -1,5 +1,6 @@
 package edu.rpi.legup.puzzle.starbattle;
 
+import edu.rpi.legup.model.Goal;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
@@ -50,6 +51,7 @@ public class StarBattleCellFactory extends ElementFactory {
             throw new InvalidFileFormatException("starbattle Factory: could not find attribute(s)");
         }
     }
+
 
     public org.w3c.dom.Element exportCell(Document document, PuzzleElement puzzleElement) {
         org.w3c.dom.Element cellElement = document.createElement("cell");
