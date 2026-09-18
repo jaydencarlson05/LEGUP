@@ -86,7 +86,6 @@ public class LightUpImporter extends PuzzleImporter {
                 throw new InvalidFileFormatException("lightup Importer: invalid board dimensions");
             }
 
-
             int width = lightUpBoard.getWidth();
             int height = lightUpBoard.getHeight();
 
@@ -122,8 +121,7 @@ public class LightUpImporter extends PuzzleImporter {
                 for (int i = 0; i < cellList.getLength(); i++) {
                     LightUpCell cell =
                             (LightUpCell)
-                                    puzzle.getFactory()
-                                            .importCell(cellList.item(i), lightUpBoard);
+                                    puzzle.getFactory().importCell(cellList.item(i), lightUpBoard);
                     // Store the goal value as goalData and mark the board cell as goal
                     LightUpCell boardCell = (LightUpCell) lightUpBoard.getCell(cell.getLocation());
                     if (boardCell != null) {
@@ -143,6 +141,12 @@ public class LightUpImporter extends PuzzleImporter {
         }
     }
 
+    /**
+     * Creates the board from an array of statements
+     *
+     * @param statements array of string statements representing the board
+     * @throws UnsupportedOperationException since Light Up does not accept text input
+     */
     @Override
     public void initializeBoard(String[] statements) throws UnsupportedOperationException {
         throw new UnsupportedOperationException("Light Up cannot accept text input");
