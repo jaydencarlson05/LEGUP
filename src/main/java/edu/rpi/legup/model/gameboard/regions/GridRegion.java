@@ -1,4 +1,4 @@
-package edu.rpi.legup.model.gameboard;
+package edu.rpi.legup.model.gameboard.regions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,5 +52,14 @@ public abstract class GridRegion<T> {
      */
     public int getSize() {
         return regionCells.size();
+    }
+
+    /**
+     * Draws a border around the region of cells
+     *
+     */
+    public void drawBorders()
+    {
+
     }
 }

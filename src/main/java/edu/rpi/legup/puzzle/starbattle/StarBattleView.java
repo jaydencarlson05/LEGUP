@@ -2,11 +2,14 @@ package edu.rpi.legup.puzzle.starbattle;
 
 import edu.rpi.legup.controller.BoardController;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+import edu.rpi.legup.model.gameboard.regions.RegionBorderType;
 import edu.rpi.legup.ui.boardview.GridBoardView;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
+import edu.rpi.legup.model.gameboard.regions.RegionBorder;
+import edu.rpi.legup.model.gameboard.regions.RegionBorderView;
 
 public class StarBattleView extends GridBoardView {
 
@@ -14,11 +17,11 @@ public class StarBattleView extends GridBoardView {
     static Image STAR;
 
     /** Horizontal borders between cells (visual separators across rows). */
-    private ArrayList<StarBattleBorderView>
+    private ArrayList<RegionBorderView>
             horizontalBorders; // board.size * board.size+1     left-right up-down
 
     /** Vertical borders between cells (visual separators across columns). */
-    private ArrayList<StarBattleBorderView>
+    private ArrayList<RegionBorderView>
             verticalBorders; // board.size+1 * board.size     left-right up-down
 
     static {
@@ -62,9 +65,9 @@ public class StarBattleView extends GridBoardView {
         // look like -- not |
         for (int i = 0; i < board.getWidth(); i++) {
             for (int j = 0; j < board.getHeight() + 1; j++) { // +1 to account for sides of board
-                StarBattleBorderView temp =
-                        new StarBattleBorderView(
-                                new StarBattleBorder(StarBattleCellType.HORIZ_BORDER));
+                RegionBorderView temp =
+                        new RegionBorderView(
+                                new RegionBorder(RegionBorderType.HORIZONTAL));
                 temp.setSize(elementSize);
                 if (j == 0) { // set borders at the ends of the board
                     // set on top of cell
@@ -93,9 +96,9 @@ public class StarBattleView extends GridBoardView {
                 j < board.getHeight();
                 j++) { // initialize j (y) first since we're checking the opposite axis
             for (int i = 0; i < board.getHeight() + 1; i++) { // +1 to account for sides of board
-                StarBattleBorderView temp =
-                        new StarBattleBorderView(
-                                new StarBattleBorder(StarBattleCellType.VERT_BORDER));
+                RegionBorderView temp =
+                        new RegionBorderView(
+                                new RegionBorder(RegionBorderType.VERTICAL));
                 temp.setSize(elementSize);
                 if (i == 0) { // set borders at the ends of the board
                     temp.setLocation(endCell(board.getCell(0, j), 4, elementSize));
@@ -185,12 +188,12 @@ public class StarBattleView extends GridBoardView {
     public void drawBoard(Graphics2D graphics2D) {
         super.drawBoard(graphics2D);
 
-        for (StarBattleBorderView border : horizontalBorders) {
+        for (RegionBorderView border : horizontalBorders) {
             // draw a horizontal line
             border.draw(graphics2D);
         }
 
-        for (StarBattleBorderView border : verticalBorders) {
+        for (RegionBorderView border : verticalBorders) {
             // draw a vertical line
             border.draw(graphics2D);
         }

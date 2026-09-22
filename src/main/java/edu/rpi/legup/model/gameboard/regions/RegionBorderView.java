@@ -1,19 +1,20 @@
-package edu.rpi.legup.puzzle.starbattle;
+package edu.rpi.legup.model.gameboard.regions;
 
 import edu.rpi.legup.ui.boardview.ElementView;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Line2D;
-import javax.swing.UIManager;
 
-public class StarBattleBorderView extends ElementView {
-    private StarBattleCellType type;
+public class RegionBorderView extends ElementView {
+    private final RegionBorderType type;
 
     /**
      * Constructs a StarBattleBorderView for the given border element.
      *
      * @param border the StarBattleBorder associated with this view
      */
-    public StarBattleBorderView(StarBattleBorder border) {
+    public RegionBorderView(RegionBorder border) {
         super(border);
         type = border.getType();
     }
@@ -24,8 +25,8 @@ public class StarBattleBorderView extends ElementView {
      * @return PuzzleElement associated with this view
      */
     @Override
-    public StarBattleBorder getPuzzleElement() {
-        return (StarBattleBorder) super.getPuzzleElement();
+    public RegionBorder getPuzzleElement() {
+        return (RegionBorder) super.getPuzzleElement();
     }
 
     /**
@@ -61,9 +62,9 @@ public class StarBattleBorderView extends ElementView {
                         UIManager.getInt("StarBattle.regionBorderWidth"),
                         BasicStroke.CAP_SQUARE,
                         BasicStroke.JOIN_MITER));
-        if (type == StarBattleCellType.HORIZ_BORDER) { // minimize ySize / height
+        if (type == RegionBorderType.HORIZONTAL) { // minimize ySize / height
             g.draw(new Line2D.Double(location.x, location.y, location.x + xSize, location.y));
-        } else if (type == StarBattleCellType.VERT_BORDER) { // minimize xSize / width
+        } else if (type == RegionBorderType.VERTICAL) { // minimize xSize / width
             g.draw(new Line2D.Double(location.x, location.y, location.x, location.y + ySize));
         }
         g.dispose();

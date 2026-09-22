@@ -1,6 +1,6 @@
 package edu.rpi.legup.puzzle.starbattle;
 
-import edu.rpi.legup.model.gameboard.GridRegion;
+import edu.rpi.legup.model.gameboard.regions.GridRegion;
 
 public class StarBattleRegion extends GridRegion<StarBattleCell> {
 
