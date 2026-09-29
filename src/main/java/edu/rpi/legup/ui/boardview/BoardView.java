@@ -5,6 +5,7 @@ import edu.rpi.legup.controller.ElementController;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.CaseBoard;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+import edu.rpi.legup.model.gameboard.regions.GridRegionView;
 import edu.rpi.legup.model.observer.IBoardListener;
 import edu.rpi.legup.model.tree.TreeElement;
 import edu.rpi.legup.ui.ScrollView;
@@ -219,6 +220,11 @@ public abstract class BoardView extends ScrollView implements IBoardListener {
     public void drawBoard(@NotNull Graphics2D graphics2D) {
         for (ElementView element : elementViews) {
             element.draw(graphics2D);
+            System.out.println("Drawing\n");
+            if (element instanceof GridRegionView)
+            {
+                System.out.println("Drawing a Region.\n");
+            }
         }
     }
 

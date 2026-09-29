@@ -2,13 +2,14 @@ package edu.rpi.legup.puzzle.starbattle;
 
 import edu.rpi.legup.model.gameboard.GridBoard;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+
 import java.util.*;
 
 public class StarBattleBoard extends GridBoard {
 
     private int size;
     private int puzzleNum;
-    protected List<StarBattleRegion> regions;
+    private List<StarBattleRegion> regions;
 
     // private ArrayList<Integer> groupSizes;
 
@@ -114,6 +115,7 @@ public class StarBattleBoard extends GridBoard {
         return getRegion(cell.getGroupIndex());
     }
 
+    public List<StarBattleRegion> getRegions() {return regions;}
     /**
      * Sets a region at the specified index.
      *

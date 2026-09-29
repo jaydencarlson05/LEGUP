@@ -29,7 +29,7 @@ public class StarBattleExporter extends PuzzleExporter {
 
         appendGoalElement(newDocument, boardElement, board);
 
-        for (StarBattleRegion sb_region : board.regions) {
+        for (StarBattleRegion sb_region : board.getRegions()) {
             org.w3c.dom.Element regionsElement = newDocument.createElement("region");
             org.w3c.dom.Element cellsElement = newDocument.createElement("cells");
             for (StarBattleCell cell : sb_region.getCells()) {
