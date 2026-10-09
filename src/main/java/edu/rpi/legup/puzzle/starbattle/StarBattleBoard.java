@@ -115,7 +115,10 @@ public class StarBattleBoard extends GridBoard {
         return getRegion(cell.getGroupIndex());
     }
 
+
     public List<StarBattleRegion> getRegions() {return regions;}
+
+
     /**
      * Sets a region at the specified index.
      *

@@ -14,7 +14,7 @@ public class StarBattleView extends GridBoardView {
 
     /** Image used to render star cells. */
     static Image STAR;
-    private ArrayList<GridRegionView> regionBorderViews;
+    private ArrayList<GridRegionView> regionViews;
 
     static {
         try {
@@ -35,7 +35,7 @@ public class StarBattleView extends GridBoardView {
      */
     public StarBattleView(StarBattleBoard board) {
         super(new BoardController(), new StarBattleController(), board.getDimension());
-        regionBorderViews = new ArrayList<>();
+        regionViews = new ArrayList<>();
         for (PuzzleElement puzzleElement : board.getPuzzleElements()) {
             StarBattleCell cell = (StarBattleCell) puzzleElement;
             Point loc = cell.getLocation();
@@ -48,14 +48,14 @@ public class StarBattleView extends GridBoardView {
         }
         System.out.println("About to add regions:\n");
         int count = 0;
-        for (GridRegion<?> region : board.getRegions())
+        for (StarBattleRegion region : board.getRegions())
         {
             GridRegionView regionView = new GridRegionView(region);
             regionView.setIndex(count++);
             regionView.setSize(elementSize);
             regionView.setLocation(new Point(0, 0));
             System.out.println("Region added.\n");
-            regionBorderViews.add(regionView);
+            regionViews.add(regionView);
         }
     }
 
@@ -129,9 +129,8 @@ public class StarBattleView extends GridBoardView {
     @Override
     public void drawBoard(Graphics2D graphics2D) {
         super.drawBoard(graphics2D);
-        for (ElementView element : regionBorderViews) {
-            element.draw(graphics2D);
-            System.out.println("Drawing a Region.\n");
+        for (GridRegionView regionView : regionViews) {
+            regionView.draw(graphics2D);
         }
         // testing how to draw things off the board
         // StarBattleCell test = new StarBattleCell(0, new Point(-10,-10), -1, 30);

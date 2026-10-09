@@ -220,11 +220,6 @@ public abstract class BoardView extends ScrollView implements IBoardListener {
     public void drawBoard(@NotNull Graphics2D graphics2D) {
         for (ElementView element : elementViews) {
             element.draw(graphics2D);
-            System.out.println("Drawing\n");
-            if (element instanceof GridRegionView)
-            {
-                System.out.println("Drawing a Region.\n");
-            }
         }
     }
 

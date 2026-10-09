@@ -91,27 +91,28 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
         for (Point point: cellLocations)
         {
             int x = point.x; int y = point.y;
+
             // Top edge
             if (!cellLocations.contains(new Point(x, y-1))) {
-                border.moveTo(x-.5, y-.5);
+                border.moveTo(x, y);
                 border.lineTo(x + 1, y);
             }
 
             // Right edge
             if (!cellLocations.contains(new Point(x+1, y))) {
-                border.moveTo(x+.5, y-.5);
-                border.lineTo(x, y+1);
+                border.moveTo(x+1, y);
+                border.lineTo(x+1, y+1);
             }
 
             // Bottom edge
-            if (!cellLocations.contains(new Point(x, y-1))) {
-                border.moveTo(x-.5, y+.5);
-                border.lineTo(x+1, y);
+            if (!cellLocations.contains(new Point(x, y+1))) {
+                border.moveTo(x, y+1);
+                border.lineTo(x+1, y+1);
             }
 
             // Left edge
             if (!cellLocations.contains(new Point(x-1, y))) {
-                border.moveTo(x-.5, y-.5);
+                border.moveTo(x, y);
                 border.lineTo(x, y+1);
             }
         }
