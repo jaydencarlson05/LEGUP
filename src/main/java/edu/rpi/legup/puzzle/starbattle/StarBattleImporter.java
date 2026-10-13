@@ -81,7 +81,7 @@ public class StarBattleImporter extends PuzzleImporter {
                 StarBattleBoard.setCell(x, y, cell);
                 region_i.addCell(cell);
             }
-            StarBattleBoard.setRegion(i, region_i);
+            StarBattleBoard.addRegion(region_i);
         }
 
         puzzle.setCurrentBoard(StarBattleBoard);

@@ -8,6 +8,8 @@ import edu.rpi.legup.model.tree.TreeTransition;
 import edu.rpi.legup.puzzle.starbattle.StarBattleBoard;
 import edu.rpi.legup.puzzle.starbattle.StarBattleCell;
 import edu.rpi.legup.puzzle.starbattle.StarBattleCellType;
+import edu.rpi.legup.puzzle.starbattle.StarBattleRegion;
+
 import java.util.*;
 
 public class ColumnsWithinRegionsDirectRule extends DirectRule {
@@ -54,7 +56,7 @@ public class ColumnsWithinRegionsDirectRule extends DirectRule {
         StarBattleBoard origBoard = (StarBattleBoard) transition.getParents().get(0).getBoard();
         StarBattleCell cell = (StarBattleCell) board.getPuzzleElement(puzzleElement);
         int dim = board.getSize();
-        int region = cell.getGroupIndex();
+        StarBattleRegion region = board.getRegion(cell);
         int column = cell.getLocation().x;
 
         if (cell.getType() != StarBattleCellType.BLACK) {
@@ -65,7 +67,7 @@ public class ColumnsWithinRegionsDirectRule extends DirectRule {
         generateSubsets(subsets, 0, column, dim);
 
         for (List<Integer> columnSubset : subsets) {
-            Set<Integer> regions = new HashSet<Integer>();
+            Set<StarBattleRegion> regions = new HashSet<>();
             boolean containsRegion = false;
             int columnStars = 0;
             int regionStars = 0;
@@ -73,10 +75,10 @@ public class ColumnsWithinRegionsDirectRule extends DirectRule {
                 columnStars += origBoard.columnStars(c);
                 for (StarBattleCell ce : origBoard.getCol(c)) {
                     if (ce.getType() == StarBattleCellType.UNKNOWN) {
-                        if (regions.add(ce.getGroupIndex())) {
-                            regionStars += origBoard.getRegion(ce.getGroupIndex()).numStars();
+                        if (regions.add(board.getRegion(ce))) {
+                            regionStars += origBoard.getRegion(ce).numStars();
                         }
-                        if (ce.getGroupIndex() == region) {
+                        if (board.getRegion(ce).equals(region)) {
                             containsRegion = true;
                         }
                     }

@@ -2,6 +2,7 @@ package edu.rpi.legup.model.gameboard.regions;
 
 import edu.rpi.legup.model.gameboard.GridCell;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+import edu.rpi.legup.puzzle.starbattle.StarBattleRegion;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
@@ -18,12 +19,12 @@ import java.util.Set;
  */
 public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<Integer> {
 
-    protected List<T> regionCells;
+    protected Set<T> regionCells;
     protected Path2D border;
 
     /** Region Constructor */
     public GridRegion() {
-        this.regionCells = new ArrayList<>();
+        this.regionCells = new HashSet<>();
         this.border = new Path2D.Double();
     }
 
@@ -52,7 +53,7 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
      *
      * @return list of cells in region
      */
-    public List<T> getCells() {
+    public Set<T> getCells() {
         return regionCells;
     }
 
@@ -75,6 +76,45 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
         return border;
     }
 
+    /**
+     * Returns true if the region contains the given cell, false if it does not
+     *
+     * @param cell Cell to check if this region contains
+     * @return true iff region contains cell
+     */
+    public boolean contains(T cell)
+    {
+        return regionCells.contains(cell);
+    }
+
+    /**
+     * Returns true if the two regions share a cell list
+     *
+     * @param other Other region to check equivalence against
+     * @return true iff this.regionCells.equals(other.regionCells)
+     */
+    public boolean equals(StarBattleRegion other)
+    {
+        return getCellLocations().equals(other.getCellLocations());
+    }
+
+    public abstract GridRegion<T> copy();
+
+    /**
+     * Returns the set of locations of each cell in the region
+     *
+     * @return the set of locations of each cell in the region
+     */
+    public Set<Point> getCellLocations()
+    {
+        Set<Point> cellLocations = new HashSet<>();
+        for (GridCell<?> cell : regionCells)
+        {
+            cellLocations.add(cell.getLocation());
+        }
+        return cellLocations;
+    }
+
 
     /**
      * Updates the border around the region of cells
@@ -83,11 +123,7 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
     public void updateBorderPath()
     {
         border.reset();
-        Set<Point> cellLocations = new HashSet<>();
-        for (GridCell<?> cell : regionCells)
-        {
-            cellLocations.add(cell.getLocation());
-        }
+        Set<Point> cellLocations = getCellLocations();
         for (Point point: cellLocations)
         {
             int x = point.x; int y = point.y;

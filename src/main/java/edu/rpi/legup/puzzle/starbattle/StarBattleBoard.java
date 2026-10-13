@@ -2,6 +2,7 @@ package edu.rpi.legup.puzzle.starbattle;
 
 import edu.rpi.legup.model.gameboard.GridBoard;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -9,7 +10,7 @@ public class StarBattleBoard extends GridBoard {
 
     private int size;
     private int puzzleNum;
-    private List<StarBattleRegion> regions;
+    private Set<StarBattleRegion> regions;
 
     // private ArrayList<Integer> groupSizes;
 
@@ -23,7 +24,7 @@ public class StarBattleBoard extends GridBoard {
         super(size, size);
         this.size = size;
         this.puzzleNum = num;
-        this.regions = new ArrayList<>();
+        this.regions = new HashSet<>();
         for (int i = 0; i < size; i++) {
             regions.add(new StarBattleRegion());
         }
@@ -92,18 +93,6 @@ public class StarBattleBoard extends GridBoard {
         return column;
     }
 
-    /**
-     * Gets the region at the specified index.
-     *
-     * @param index the region index
-     * @return the corresponding StarBattleRegion, or null if out of bounds
-     */
-    public StarBattleRegion getRegion(int index) {
-        if (index >= size) {
-            return null;
-        }
-        return regions.get(index);
-    }
 
     /**
      * Gets the region associated with the given cell.
@@ -111,23 +100,20 @@ public class StarBattleBoard extends GridBoard {
      * @param cell the StarBattleCell
      * @return the region the cell belongs to
      */
-    public StarBattleRegion getRegion(StarBattleCell cell) {
-        return getRegion(cell.getGroupIndex());
+    public StarBattleRegion getRegion(StarBattleCell cell)
+    {
+        for (StarBattleRegion r : regions)
+        {
+            if (r.contains(cell)) {return r;}
+        }
+        return null;
     }
 
+    public void addRegion(StarBattleRegion region) {regions.add(region);}
 
-    public List<StarBattleRegion> getRegions() {return regions;}
 
+    public Set<StarBattleRegion> getRegions() {return regions;}
 
-    /**
-     * Sets a region at the specified index.
-     *
-     * @param regionNum the index of the region
-     * @param region the StarBattleRegion to set
-     */
-    public void setRegion(int regionNum, StarBattleRegion region) {
-        regions.set(regionNum, region);
-    }
 
     /**
      * Counts the number of stars in the specified column.
@@ -172,25 +158,11 @@ public class StarBattleBoard extends GridBoard {
      */
     public StarBattleBoard copy() {
         StarBattleBoard copy = new StarBattleBoard(size, puzzleNum);
-        for (int r = 0; r < this.regions.size(); ++r) {
-            StarBattleRegion regionCopy = this.regions.get(r).copy();
-            for (StarBattleCell cell : regionCopy.getCells()) {
-                copy.setCell(cell.getLocation().x, cell.getLocation().y, cell);
-            }
-            copy.setRegion(r, regionCopy);
+        for (StarBattleRegion region : regions)
+        {
+            StarBattleRegion regionCopy = region.copy();
+            copy.addRegion(regionCopy);
         }
-        /*
-        for (int x = 0; x < this.dimension.width; x++) {
-            for (int y = 0; y < this.dimension.height; y++) {
-                copy.setCell(x, y, getCell(x, y).copy());
-            }
-
-            if (x < this.regions.size()) {
-                copy.regions.add(this.getRegion(x).copy());
-            }
-
-        }
-         */
         for (PuzzleElement e : modifiedData) {
             copy.getPuzzleElement(e).setModifiable(false);
         }

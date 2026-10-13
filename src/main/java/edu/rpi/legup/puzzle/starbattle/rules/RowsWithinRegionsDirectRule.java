@@ -8,6 +8,8 @@ import edu.rpi.legup.model.tree.TreeTransition;
 import edu.rpi.legup.puzzle.starbattle.StarBattleBoard;
 import edu.rpi.legup.puzzle.starbattle.StarBattleCell;
 import edu.rpi.legup.puzzle.starbattle.StarBattleCellType;
+import edu.rpi.legup.puzzle.starbattle.StarBattleRegion;
+
 import java.util.*;
 
 public class RowsWithinRegionsDirectRule extends DirectRule {
@@ -56,7 +58,7 @@ public class RowsWithinRegionsDirectRule extends DirectRule {
         StarBattleBoard origBoard = (StarBattleBoard) transition.getParents().get(0).getBoard();
         StarBattleCell cell = (StarBattleCell) board.getPuzzleElement(puzzleElement);
         int dim = board.getSize();
-        int region = cell.getGroupIndex();
+        StarBattleRegion region = board.getRegion(cell);
         int row = cell.getLocation().y;
 
         if (cell.getType() != StarBattleCellType.BLACK) {
@@ -76,9 +78,9 @@ public class RowsWithinRegionsDirectRule extends DirectRule {
                 for (StarBattleCell ce : origBoard.getRow(r)) {
                     if (ce.getType() == StarBattleCellType.UNKNOWN) {
                         if (regions.add(ce.getGroupIndex())) {
-                            regionStars += origBoard.getRegion(ce.getGroupIndex()).numStars();
+                            regionStars += origBoard.getRegion(ce).numStars();
                         }
-                        if (ce.getGroupIndex() == region) {
+                        if (board.getRegion(ce).equals(region)) {
                             containsRegion = true;
                         }
                     }

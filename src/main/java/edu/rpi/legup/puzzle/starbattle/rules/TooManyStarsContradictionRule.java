@@ -9,6 +9,7 @@ import edu.rpi.legup.puzzle.starbattle.StarBattleCellType;
 import edu.rpi.legup.puzzle.starbattle.StarBattleRegion;
 import java.awt.*;
 import java.util.List;
+import java.util.Set;
 
 public class TooManyStarsContradictionRule extends ContradictionRule {
     private final String INVALID_USE_MESSAGE =
@@ -94,9 +95,8 @@ public class TooManyStarsContradictionRule extends ContradictionRule {
         // check region
         starCount = 0;
         StarBattleRegion reg = starbattleBoard.getRegion(cell);
-        List<StarBattleCell> cellList = reg.getCells(); // list of cells
-        for (int k = 0; k < cellList.size(); k++) {
-            if (cellList.get(k).getType() == StarBattleCellType.STAR) {
+        for (StarBattleCell c : reg.getCells()) {
+            if (c.getType() == StarBattleCellType.STAR) {
                 starCount++;
                 if (starCount > puzzleNum) {
                     valid = false;
