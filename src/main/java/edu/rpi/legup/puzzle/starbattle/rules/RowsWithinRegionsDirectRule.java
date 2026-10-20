@@ -69,7 +69,7 @@ public class RowsWithinRegionsDirectRule extends DirectRule {
         generateSubsets(subsets, 0, row, dim);
 
         for (List<Integer> rowSubset : subsets) {
-            Set<Integer> regions = new HashSet<Integer>();
+            Set<StarBattleRegion> regions = new HashSet<>();
             boolean containsRegion = false;
             int rowStars = 0;
             int regionStars = 0;
@@ -77,7 +77,7 @@ public class RowsWithinRegionsDirectRule extends DirectRule {
                 rowStars += origBoard.rowStars(r);
                 for (StarBattleCell ce : origBoard.getRow(r)) {
                     if (ce.getType() == StarBattleCellType.UNKNOWN) {
-                        if (regions.add(ce.getGroupIndex())) {
+                        if (regions.add(board.getRegion(ce))) {
                             regionStars += origBoard.getRegion(ce).numStars();
                         }
                         if (board.getRegion(ce).equals(region)) {

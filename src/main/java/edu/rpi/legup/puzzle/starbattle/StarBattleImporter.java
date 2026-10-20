@@ -56,7 +56,7 @@ public class StarBattleImporter extends PuzzleImporter {
                     "Not the current amount of regions in the puzzle.");
         }
 
-        StarBattleBoard StarBattleBoard =
+        StarBattleBoard starBattleBoard =
                 new StarBattleBoard(
                         size, puzzle_num); // Initialize the board with width and height from XML
 
@@ -66,43 +66,36 @@ public class StarBattleImporter extends PuzzleImporter {
             StarBattleRegion region_i = new StarBattleRegion();
 
             for (int j = 0; j < cellNodes.getLength(); j++) {
-                Element cellElement = (Element) cellNodes.item(j);
-                int x = Integer.parseInt(cellElement.getAttribute("x"));
-                int y = Integer.parseInt(cellElement.getAttribute("y"));
-                int value = Integer.parseInt(cellElement.getAttribute("value"));
-
                 // Create the StarBattleCell with the cell type and value
-                Point cellPoint = new Point(x, y);
-                StarBattleCell cell = new StarBattleCell(value, cellPoint, i, size);
-                cell.setIndex(y * size + x); // Calculate the index based on size
+                StarBattleCell cell = (StarBattleCell) puzzle.getFactory().importCell(cellNodes.item(j), starBattleBoard);
                 cell.setModifiable(true);
 
                 // Add the cell to the board
-                StarBattleBoard.setCell(x, y, cell);
+                starBattleBoard.setCell(cell.getLocation().x, cell.getLocation().y, cell);
                 region_i.addCell(cell);
             }
-            StarBattleBoard.addRegion(region_i);
+            starBattleBoard.addRegion(region_i);
         }
 
-        puzzle.setCurrentBoard(StarBattleBoard);
+        puzzle.setCurrentBoard(starBattleBoard);
         if (puzzleElement.getElementsByTagName("goal").getLength() != 0) {
             Element goalElement = (Element) puzzleElement.getElementsByTagName("goal").item(0);
-            Goal goal = puzzle.getFactory().importGoal(goalElement, StarBattleBoard);
+            Goal goal = puzzle.getFactory().importGoal(goalElement, starBattleBoard);
 
             NodeList cellList = goalElement.getElementsByTagName("cell");
             for (int i = 0; i < cellList.getLength(); i++) {
                 StarBattleCell cell =
                         (StarBattleCell)
-                                puzzle.getFactory().importCell(cellList.item(i), StarBattleBoard);
+                                puzzle.getFactory().importCell(cellList.item(i), starBattleBoard);
                 // Store the goal value as goalData and mark the board cell as goal
                 StarBattleCell boardCell =
-                        (StarBattleCell) StarBattleBoard.getCell(cell.getLocation());
+                        (StarBattleCell) starBattleBoard.getCell(cell.getLocation());
                 if (boardCell != null) {
                     boardCell.setGoalData(cell.getData());
                     boardCell.setGoal(true);
                 }
                 goal.addCell(cell);
-                StarBattleBoard.getCell(cell.getLocation()).setGoal(true);
+                starBattleBoard.getCell(cell.getLocation()).setGoal(true);
             }
             puzzle.setGoal(goal);
         } else {

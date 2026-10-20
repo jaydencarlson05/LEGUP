@@ -12,8 +12,6 @@ public class StarBattleBoard extends GridBoard {
     private int puzzleNum;
     private Set<StarBattleRegion> regions;
 
-    // private ArrayList<Integer> groupSizes;
-
     /**
      * Constructs a StarBattleBoard with the specified size and puzzle number.
      *
@@ -156,14 +154,17 @@ public class StarBattleBoard extends GridBoard {
      *
      * @return a new independent copy of the board
      */
-    public StarBattleBoard copy() {
+    public @NotNull StarBattleBoard copy() {
         StarBattleBoard copy = new StarBattleBoard(size, puzzleNum);
         for (StarBattleRegion region : regions)
         {
             StarBattleRegion regionCopy = region.copy();
             copy.addRegion(regionCopy);
+            for (StarBattleCell cell : regionCopy.getCells()) {
+                copy.setCell(cell.getLocation().x, cell.getLocation().y, cell);
+            }
         }
-        for (PuzzleElement e : modifiedData) {
+        for (PuzzleElement<?> e : modifiedData) {
             copy.getPuzzleElement(e).setModifiable(false);
         }
         return copy;

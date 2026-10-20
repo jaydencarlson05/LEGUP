@@ -5,6 +5,8 @@ import edu.rpi.legup.model.gameboard.ElementFactory;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
 import edu.rpi.legup.save.InvalidFileFormatException;
 import java.awt.*;
+import java.util.Set;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -34,20 +36,16 @@ public class StarBattleCellFactory extends ElementFactory {
             int value = Integer.valueOf(attributeList.getNamedItem("value").getNodeValue());
             int x = Integer.valueOf(attributeList.getNamedItem("x").getNodeValue());
             int y = Integer.valueOf(attributeList.getNamedItem("y").getNodeValue());
-            int groupIndex =
-                    Integer.valueOf(attributeList.getNamedItem("groupIndex").getNodeValue());
             if (x >= size || y >= size) {
                 throw new InvalidFileFormatException(
                         "starbattle Factory: cell location out of bounds");
             }
-            if (groupIndex >= size || groupIndex < 0) {
-                throw new InvalidFileFormatException("starbattle Factory: not in a valid region");
-            }
-            if (value != 0) { // ALL INITIAL PUZZLES ARE BLANK, SUBJECT TO CHANGE
-                throw new InvalidFileFormatException("starbattle Factory: cell unknown value");
+
+            if (!Set.of(0, -1, -2).contains(value)) { // ALL INITIAL PUZZLES ARE BLANK, SUBJECT TO CHANGE
+                throw new InvalidFileFormatException("starbattle Factory: cell unknown value " + value);
             }
 
-            StarBattleCell cell = new StarBattleCell(value, new Point(x, y), groupIndex, size);
+            StarBattleCell cell = new StarBattleCell(value, new Point(x, y), size);
             cell.setIndex(y * size + x);
             return cell;
         } catch (NumberFormatException e1) {

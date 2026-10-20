@@ -6,7 +6,6 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 public class StarBattleCell extends GridCell<Integer> {
-    private int groupIndex; // This is the region the cell is in
     private int max;
 
     /**
@@ -14,22 +13,11 @@ public class StarBattleCell extends GridCell<Integer> {
      *
      * @param value value of the star battle cell denoting its state
      * @param location location of the cell on the board
-     * @param groupIndex indicates what group # the cell is in.
      * @param size size of the star battle cell
      */
-    public StarBattleCell(int value, Point location, int groupIndex, int size) {
+    public StarBattleCell(int value, Point location, int size) {
         super(value, location);
-        this.groupIndex = groupIndex;
         this.max = size;
-    }
-
-    /**
-     * Gets the group index representing the region this cell belongs to.
-     *
-     * @return the group index
-     */
-    public int getGroupIndex() {
-        return groupIndex;
     }
 
     /**
@@ -99,7 +87,7 @@ public class StarBattleCell extends GridCell<Integer> {
      * @return a new StarBattleCell with the same properties
      */
     public StarBattleCell copy() {
-        StarBattleCell copy = new StarBattleCell(data, (Point) location.clone(), groupIndex, max);
+        StarBattleCell copy = new StarBattleCell(data, (Point) location.clone(), max);
         copy.setIndex(index);
         copy.setModifiable(isModifiable);
         copy.setGiven(isGiven);

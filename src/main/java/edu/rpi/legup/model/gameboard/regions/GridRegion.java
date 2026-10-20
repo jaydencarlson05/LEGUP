@@ -84,7 +84,7 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
      */
     public boolean contains(T cell)
     {
-        return regionCells.contains(cell);
+        return getCellLocations().contains(cell.getLocation());
     }
 
     /**
