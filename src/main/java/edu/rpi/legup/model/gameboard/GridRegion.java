@@ -1,14 +1,10 @@
-package edu.rpi.legup.model.gameboard.regions;
+package edu.rpi.legup.model.gameboard;
 
-import edu.rpi.legup.model.gameboard.GridCell;
-import edu.rpi.legup.model.gameboard.PuzzleElement;
 import edu.rpi.legup.puzzle.starbattle.StarBattleRegion;
 
 import java.awt.*;
 import java.awt.geom.Path2D;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -18,7 +14,6 @@ import java.util.Set;
  * @param <T> the type of cell managed by the GridRegion
  */
 public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<Integer> {
-
     protected Set<T> regionCells;
     protected Path2D border;
 

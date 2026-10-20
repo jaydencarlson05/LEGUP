@@ -2,8 +2,9 @@ package edu.rpi.legup.puzzle.starbattle;
 
 import edu.rpi.legup.controller.BoardController;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
-import edu.rpi.legup.model.gameboard.regions.*;
 import edu.rpi.legup.ui.boardview.GridBoardView;
+import edu.rpi.legup.ui.boardview.GridRegionView;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package edu.rpi.legup.model.gameboard.regions;
+package edu.rpi.legup.ui.boardview;
 
-import edu.rpi.legup.ui.boardview.ElementView;
+import edu.rpi.legup.model.gameboard.GridRegion;
 
 import javax.swing.*;
 import java.awt.*;
@@ -53,7 +53,7 @@ public class GridRegionView extends ElementView {
         float xSize = size.width;
         float ySize = size.height;
 
-        g.setColor(UIManager.getColor("StarBattle.borderColor"));
+        g.setColor(UIManager.getColor("GridRegion.borderColor"));
         g.setStroke(
                 new BasicStroke(
                         UIManager.getInt("StarBattle.regionBorderWidth"),
@@ -63,11 +63,7 @@ public class GridRegionView extends ElementView {
         AffineTransform scale = AffineTransform.getScaleInstance(xSize, ySize);
         Path2D scaledBorder = (Path2D) border.createTransformedShape(scale);
 
-
         g.draw(scaledBorder);
         g.dispose();
-        // This needs more work but it'll do for now (add  - (xSize / 2) to location.y and x that
-        // don't have it)
-        // Also, look into changing width of borders, size of cell = 30 units
     }
 }

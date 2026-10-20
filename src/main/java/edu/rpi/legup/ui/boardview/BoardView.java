@@ -5,7 +5,6 @@ import edu.rpi.legup.controller.ElementController;
 import edu.rpi.legup.model.gameboard.Board;
 import edu.rpi.legup.model.gameboard.CaseBoard;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
-import edu.rpi.legup.model.gameboard.regions.GridRegionView;
 import edu.rpi.legup.model.observer.IBoardListener;
 import edu.rpi.legup.model.tree.TreeElement;
 import edu.rpi.legup.ui.ScrollView;
