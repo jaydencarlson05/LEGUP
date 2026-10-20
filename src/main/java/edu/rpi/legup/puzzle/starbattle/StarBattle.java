@@ -2,6 +2,9 @@ package edu.rpi.legup.puzzle.starbattle;
 
 import edu.rpi.legup.model.Puzzle;
 import edu.rpi.legup.model.gameboard.Board;
+import edu.rpi.legup.model.gameboard.GridCell;
+import edu.rpi.legup.model.gameboard.PuzzleElement;
+import edu.rpi.legup.model.rules.ContradictionRule;
 
 public class StarBattle extends Puzzle {
 
@@ -45,6 +48,18 @@ public class StarBattle extends Puzzle {
      */
     @Override
     public boolean isBoardComplete(Board board) {
+        StarBattleBoard starBattleBoard = (StarBattleBoard) board;
+        for (PuzzleElement<?> data : starBattleBoard.getPuzzleElements()) {
+            StarBattleCell cell = (StarBattleCell) data;
+            if (!cell.isKnown()) {
+                return false;
+            }
+        }
+        for (ContradictionRule rule : contradictionRules) {
+            if (rule.checkContradiction(starBattleBoard) == null) {
+                return false;
+            }
+        }
         return true;
     }
 
