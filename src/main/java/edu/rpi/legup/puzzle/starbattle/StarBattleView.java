@@ -4,17 +4,20 @@ import edu.rpi.legup.controller.BoardController;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
 import edu.rpi.legup.ui.boardview.GridBoardView;
 import edu.rpi.legup.ui.boardview.GridRegionView;
+import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import javax.imageio.ImageIO;
 
 public class StarBattleView extends GridBoardView {
 
     /** Image used to render star cells. */
     static Image STAR;
-    private ArrayList<GridRegionView> regionViews;
+    private final Set<GridRegionView> regionViews;
 
     static {
         try {
@@ -35,7 +38,6 @@ public class StarBattleView extends GridBoardView {
      */
     public StarBattleView(StarBattleBoard board) {
         super(new BoardController(), new StarBattleController(), board.getDimension());
-        regionViews = new ArrayList<>();
         for (PuzzleElement puzzleElement : board.getPuzzleElements()) {
             StarBattleCell cell = (StarBattleCell) puzzleElement;
             Point loc = cell.getLocation();
@@ -46,7 +48,7 @@ public class StarBattleView extends GridBoardView {
                     new Point(loc.x * elementSize.width, loc.y * elementSize.height));
             elementViews.add(elementView);
         }
-        System.out.println("About to add regions:\n");
+        regionViews = new HashSet<>();
         int count = 0;
         for (StarBattleRegion region : board.getRegions())
         {
@@ -54,7 +56,6 @@ public class StarBattleView extends GridBoardView {
             regionView.setIndex(count++);
             regionView.setSize(elementSize);
             regionView.setLocation(new Point(0, 0));
-            System.out.println("Region added.\n");
             regionViews.add(regionView);
         }
     }
@@ -127,12 +128,10 @@ public class StarBattleView extends GridBoardView {
      */
 
     @Override
-    public void drawBoard(Graphics2D graphics2D) {
+    public void drawBoard(@NotNull Graphics2D graphics2D) {
         super.drawBoard(graphics2D);
         for (GridRegionView regionView : regionViews) {
             regionView.draw(graphics2D);
         }
-        // testing how to draw things off the board
-        // StarBattleCell test = new StarBattleCell(0, new Point(-10,-10), -1, 30);
     }
 }

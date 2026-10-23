@@ -24,32 +24,9 @@ public class RippleEffectElementView extends GridElementView {
     @Override
     public void drawElement(Graphics2D graphics2D) {
         RippleEffectCell cell = getPuzzleElement();
-        RippleEffectCellType type = cell.getType();
 
-        // Draw the cell based on its type
-        switch (type) {
-            case WHITE:
-                graphics2D.setColor(Color.WHITE);
-                break;
-            case BLUE:
-                graphics2D.setColor(Color.BLUE);
-                break;
-            case RED:
-                graphics2D.setColor(Color.RED);
-                break;
-            case YELLOW:
-                graphics2D.setColor(Color.YELLOW);
-                break;
-            case GREEN:
-                graphics2D.setColor(Color.GREEN);
-                break;
-            default:
-                // For BLACK and any other type
-                graphics2D.setColor(Color.BLACK);
-                break;
-        }
-
-        // Fill the cell with the color
+        // Draw the white cell
+        graphics2D.setColor(Color.WHITE);
         graphics2D.fillRect(location.x, location.y, size.width, size.height);
 
         // Draw a black border
@@ -59,7 +36,7 @@ public class RippleEffectElementView extends GridElementView {
         // Draw the number inside the cell
         graphics2D.setColor(Color.BLACK);
         graphics2D.setFont(new Font("Arial", Font.BOLD, 14));
-        String data = String.valueOf(cell.getNumber());
+        String data = String.valueOf(cell.getData());
         FontMetrics metrics = graphics2D.getFontMetrics();
         int x = location.x + (size.width - metrics.stringWidth(data)) / 2;
         int y = location.y + ((size.height - metrics.getHeight()) / 2) + metrics.getAscent();

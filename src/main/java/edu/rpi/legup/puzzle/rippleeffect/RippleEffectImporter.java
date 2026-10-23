@@ -65,11 +65,11 @@ public class RippleEffectImporter extends PuzzleImporter {
         int height = Integer.parseInt(puzzleElement.getAttribute("height"));
 
         RippleEffectBoard rippleEffectBoard = new RippleEffectBoard(width, height); // Initialize the board with width and height from XML
-        int cellType = 1; // Start with cell type 1
 
         for (int i = 0; i < regionNodes.getLength(); i++) {
             Element regionElement = (Element) regionNodes.item(i);
             NodeList cellNodes = regionElement.getElementsByTagName("cell");
+            RippleEffectRegion region = new RippleEffectRegion();
 
             for (int j = 0; j < cellNodes.getLength(); j++) {
                 Element cellElement = (Element) cellNodes.item(j);
@@ -80,16 +80,17 @@ public class RippleEffectImporter extends PuzzleImporter {
                 Point cellPoint = new Point(x, y);
 
                 // Create the RippleEffectCell with the cell type and value
-                RippleEffectCell cell = new RippleEffectCell(cellType, cellPoint, value);
+                RippleEffectCell cell = new RippleEffectCell(value, cellPoint);
                 cell.setIndex(y * width + x); // Calculate the index based on width and height
                 cell.setModifiable(true);
 
                 // Add the cell to the board
                 rippleEffectBoard.setCell(x, y, cell);
+                region.addCell(cell);
             }
 
-            // Increment cell type for the next region
-            cellType++;
+            // Add the region to the board
+            rippleEffectBoard.addRegion(region);
         }
 
         puzzle.setCurrentBoard(rippleEffectBoard);
