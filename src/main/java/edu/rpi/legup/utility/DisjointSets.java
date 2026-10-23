@@ -106,6 +106,18 @@ public class DisjointSets<T> {
         }
     }
 
+    public void moveTo(T p, T q)
+    {
+        T pid = find(p);
+        T qid = find(q);
+        if (pid == qid) {return;}
+
+        sets.get(pid).remove(p);
+
+        createSet(p);
+        union(p, q);
+    }
+
     /**
      * Determines whether the specified puzzleElement is in the DisjointSets
      *
@@ -162,5 +174,22 @@ public class DisjointSets<T> {
      */
     public int size() {
         return parents.size();
+    }
+
+    public static void main(String[] args) {
+        DisjointSets<Integer> sets = new DisjointSets<>();
+        sets.addAndUnion(1, 2);
+        sets.addAndUnion(3, 4);
+        sets.addAndUnion(4, 5);
+        for (Set<Integer> s : sets.getAllSets())
+        {
+            System.out.println(s);
+        }
+
+        sets.moveTo(2, 3);
+        for (Set<Integer> s : sets.getAllSets())
+        {
+            System.out.println(s);
+        }
     }
 }

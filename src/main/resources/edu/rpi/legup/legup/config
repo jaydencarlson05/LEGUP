@@ -28,6 +28,10 @@
             qualifiedClassName="edu.rpi.legup.puzzle.nurikabe.Nurikabe"
             fileType=".xml"
             fileCreationDisabled="false"/>
+        <puzzle name="RippleEffect"
+            qualifiedClassName="edu.rpi.legup.puzzle.rippleeffect.RippleEffect"
+            fileType=".xml"
+            fileCreationDisabled="false"/>
         <puzzle name="ShortTruthTable"
             qualifiedClassName="edu.rpi.legup.puzzle.shorttruthtable.ShortTruthTable"
             fileType=".xml"
