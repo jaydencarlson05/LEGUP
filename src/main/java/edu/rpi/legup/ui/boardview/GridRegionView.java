@@ -9,7 +9,7 @@ import java.awt.geom.Path2D;
 
 public class GridRegionView extends ElementView {
     /**
-     * GridRegionView Constructor creates a GridRegion view
+     * GridRegionView Constructor creates a GridRegion view given the region the view is for
      *
      * @param region GridRegion which the view uses to draw
      */
@@ -56,9 +56,11 @@ public class GridRegionView extends ElementView {
         g.setColor(UIManager.getColor("GridRegion.borderColor"));
         g.setStroke(
                 new BasicStroke(
-                        UIManager.getInt("StarBattle.regionBorderWidth"),
+                        UIManager.getInt("GridRegion.borderWidth"),
                         BasicStroke.CAP_SQUARE,
                         BasicStroke.JOIN_MITER));
+
+        // Scale the border from cell coordinates to board size
         Path2D border = ((GridRegion<?>) puzzleElement).getBorder();
         AffineTransform scale = AffineTransform.getScaleInstance(xSize, ySize);
         Path2D scaledBorder = (Path2D) border.createTransformedShape(scale);

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * GridRegion represents a collection of cells within a grid. It manages a list of cells and
+ * GridRegion represents a collection of cells within a grid. It manages a set of cells and
  * provides methods to add, remove, and retrieve cells from the region.
  *
  * @param <T> the type of cell managed by the GridRegion
@@ -44,9 +44,9 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
     }
 
     /**
-     * Returns the list of cells in the region
+     * Returns the set of cells in the region
      *
-     * @return list of cells in region
+     * @return set of cells in region
      */
     public Set<T> getCells() {
         return regionCells;
@@ -93,6 +93,11 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
         return getCellLocations().equals(other.getCellLocations());
     }
 
+    /**
+     * Returns a deep copy of the GridRegion
+     *
+     * @return a deep copy of the GridRegion
+     */
     public abstract GridRegion<T> copy();
 
     /**
