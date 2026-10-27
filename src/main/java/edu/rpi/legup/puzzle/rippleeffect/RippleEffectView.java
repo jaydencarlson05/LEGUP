@@ -15,7 +15,7 @@ public class RippleEffectView extends GridBoardView {
 
     public RippleEffectView(RippleEffectBoard board) {
         super(new BoardController(), new RippleEffectCellController(), board.getDimension());
-
+        super.setBoard(board);
         for (PuzzleElement<?> puzzleElement : board.getPuzzleElements()) {
             RippleEffectCell cell = (RippleEffectCell) puzzleElement;
             Point loc = cell.getLocation();

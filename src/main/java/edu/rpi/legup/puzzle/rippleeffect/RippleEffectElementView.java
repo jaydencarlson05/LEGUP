@@ -34,12 +34,15 @@ public class RippleEffectElementView extends GridElementView {
         graphics2D.drawRect(location.x, location.y, size.width, size.height);
 
         // Draw the number inside the cell
-        graphics2D.setColor(Color.BLACK);
-        graphics2D.setFont(new Font("Arial", Font.BOLD, 14));
-        String data = String.valueOf(cell.getData());
-        FontMetrics metrics = graphics2D.getFontMetrics();
-        int x = location.x + (size.width - metrics.stringWidth(data)) / 2;
-        int y = location.y + ((size.height - metrics.getHeight()) / 2) + metrics.getAscent();
-        graphics2D.drawString(data, x, y);
+        if (cell.getType() == RippleEffectCellType.NUMBER)
+        {
+            graphics2D.setColor(Color.BLACK);
+            graphics2D.setFont(new Font("Arial", Font.BOLD, 14));
+            String data = String.valueOf(cell.getData());
+            FontMetrics metrics = graphics2D.getFontMetrics();
+            int x = location.x + (size.width - metrics.stringWidth(data)) / 2;
+            int y = location.y + ((size.height - metrics.getHeight()) / 2) + metrics.getAscent();
+            graphics2D.drawString(data, x, y);
+        }
     }
 }

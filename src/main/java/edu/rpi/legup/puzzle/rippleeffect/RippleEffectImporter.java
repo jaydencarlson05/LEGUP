@@ -2,6 +2,7 @@ package edu.rpi.legup.puzzle.rippleeffect;
 
 import edu.rpi.legup.model.PuzzleImporter;
 import edu.rpi.legup.save.InvalidFileFormatException;
+import org.jetbrains.annotations.NotNull;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -53,7 +54,7 @@ public class RippleEffectImporter extends PuzzleImporter {
      * @throws InvalidFileFormatException if file is invalid
      */
     @Override
-    public void initializeBoard(Node node) throws InvalidFileFormatException {
+    public void initializeBoard(@NotNull Node node) throws InvalidFileFormatException {
         Element puzzleElement = (Element) node;
 
         NodeList regionNodes = puzzleElement.getElementsByTagName("region");
@@ -82,7 +83,16 @@ public class RippleEffectImporter extends PuzzleImporter {
                 // Create the RippleEffectCell with the cell type and value
                 RippleEffectCell cell = new RippleEffectCell(value, cellPoint);
                 cell.setIndex(y * width + x); // Calculate the index based on width and height
-                cell.setModifiable(true);
+                if (value != 0)
+                {
+                    cell.setModifiable(false);
+                    cell.setGiven(true);
+                }
+                else
+                {
+                    cell.setModifiable(true);
+                }
+
 
                 // Add the cell to the board
                 rippleEffectBoard.setCell(x, y, cell);
