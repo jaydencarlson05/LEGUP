@@ -105,14 +105,19 @@ public class RippleEffectBoard extends GridBoard {
     public @NotNull RippleEffectBoard copy()
     {
         RippleEffectBoard copy = new RippleEffectBoard(getWidth(), getHeight());
-        for (RippleEffectRegion region : regions)
-        {
-            copy.addRegion(region.copy());
-        }
         for (int x = 0; x < this.dimension.width; x++) {
             for (int y = 0; y < this.dimension.height; y++) {
                 copy.setCell(x, y, getCell(x, y).copy());
             }
+        }
+        for (RippleEffectRegion region : regions)
+        {
+            RippleEffectRegion regionCopy = new RippleEffectRegion();
+            for (RippleEffectCell cell : region.getCells())
+            {
+                regionCopy.addCell(copy.getCell(cell.getLocation()));
+            }
+            copy.addRegion(regionCopy);
         }
         for (PuzzleElement e : modifiedData) {
             copy.getPuzzleElement(e).setModifiable(false);

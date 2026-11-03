@@ -33,7 +33,7 @@ public class FinishWithStarsDirectRule extends DirectRule {
     public String checkRuleRawAt(TreeTransition transition, PuzzleElement puzzleElement) {
 
         StarBattleBoard board = (StarBattleBoard) transition.getBoard();
-        StarBattleBoard origBoard = (StarBattleBoard) transition.getParents().get(0).getBoard();
+        StarBattleBoard origBoard = (StarBattleBoard) transition.getParents().getFirst().getBoard();
         ContradictionRule contraRule = new TooFewStarsContradictionRule();
 
         StarBattleCell cell = (StarBattleCell) board.getPuzzleElement(puzzleElement);

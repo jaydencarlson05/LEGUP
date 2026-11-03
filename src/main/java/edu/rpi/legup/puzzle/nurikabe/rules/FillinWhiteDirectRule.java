@@ -32,7 +32,7 @@ public class FillinWhiteDirectRule extends DirectRule {
     @Override
     public String checkRuleRawAt(TreeTransition transition, PuzzleElement puzzleElement) {
         NurikabeBoard board = (NurikabeBoard) transition.getBoard();
-        NurikabeBoard origBoard = (NurikabeBoard) transition.getParents().get(0).getBoard();
+        NurikabeBoard origBoard = (NurikabeBoard) transition.getParents().getFirst().getBoard();
         ContradictionRule contraRule = new IsolateBlackContradictionRule();
 
         NurikabeCell cell = (NurikabeCell) board.getPuzzleElement(puzzleElement);
