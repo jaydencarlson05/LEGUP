@@ -10,18 +10,13 @@ import edu.rpi.legup.puzzle.rippleeffect.RippleEffectRegion;
 
 public class EqualDigitsInRegionContradictionRule extends ContradictionRule {
 
-    private final String NO_CONTRADICTION_MESSAGE =
-            "This cell does not share a value with another cell in its region";
-    private final String INVALID_USE_MESSAGE =
-            "Cell must be a numbered cell";
-
     public EqualDigitsInRegionContradictionRule()
     {
         super(
                 "RIPL-CONT-0001",
                 "Equal Digits in Region",
                 "Two equal numbers exist in the same region",
-                "edu/rpi/legup/images/rippleeffect/contradictions/DuplicateNumberPlaceholder.png"
+                "edu/rpi/legup/images/rippleeffect/contradictions/DuplicateNumber.png"
         );
     }
 
@@ -30,7 +25,7 @@ public class EqualDigitsInRegionContradictionRule extends ContradictionRule {
         RippleEffectBoard reBoard = (RippleEffectBoard) board;
         RippleEffectCell cell = (RippleEffectCell) board.getPuzzleElement(puzzleElement);
         if (cell.getType() != RippleEffectCellType.NUMBER)
-            return super.getInvalidUseOfRuleMessage() + ": " + INVALID_USE_MESSAGE;
+            return super.getInvalidUseOfRuleMessage() + ": Cell must be a numbered cell";
 
         RippleEffectRegion region = reBoard.getRegion(cell);
         for (RippleEffectCell c : region.getCells())
@@ -40,6 +35,6 @@ public class EqualDigitsInRegionContradictionRule extends ContradictionRule {
                 return null;
             }
         }
-        return super.getNoContradictionMessage() + ": " + NO_CONTRADICTION_MESSAGE;
+        return super.getNoContradictionMessage() + ": This cell does not share a value with another cell in its region";
     }
 }

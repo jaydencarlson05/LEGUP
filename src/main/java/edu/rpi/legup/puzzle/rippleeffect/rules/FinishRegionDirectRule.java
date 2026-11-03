@@ -17,7 +17,7 @@ public class FinishRegionDirectRule extends DirectRule {
                 "RIPL-BASC-0001",
                 "Finish Region",
                 "If only one number is missing from the region, fill it in.",
-                "edu/rpi/legup/images/rippleeffect/rules/FinishRegionPlaceholder.png"
+                "edu/rpi/legup/images/rippleeffect/rules/FinishRegion.png"
         );
     }
 
@@ -25,7 +25,6 @@ public class FinishRegionDirectRule extends DirectRule {
     protected String checkRuleRawAt(TreeTransition transition, PuzzleElement puzzleElement) {
         RippleEffectBoard board = (RippleEffectBoard) transition.getBoard();
         RippleEffectCell newCell = (RippleEffectCell) board.getPuzzleElement(puzzleElement);
-        System.out.println("Cell value: " + newCell.getData() + ". Cell type: " + newCell.getType());
         if (newCell.getType() != RippleEffectCellType.NUMBER)
             return super.getInvalidUseOfRuleMessage() + ": Cell must be a number";
 
@@ -37,7 +36,6 @@ public class FinishRegionDirectRule extends DirectRule {
         {
             if (c.getType() != RippleEffectCellType.NUMBER)
             {
-                System.out.println("Cell value: " + c.getData() + ". Cell type: " + c.getType() + ". Cell location: " + c.getLocation());
                 return super.getInvalidUseOfRuleMessage() + ": Region must have only one cell missing";
             }
         }
