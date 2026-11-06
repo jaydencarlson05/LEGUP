@@ -53,6 +53,23 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
     }
 
     /**
+     * Get the cell at the given location.
+     *
+     * @param location to get the cell of
+     * @return cell at location, null if there is none
+     */
+    public T getCell(Point location)
+    {
+        for (T cell : regionCells)
+        {
+            if (cell.getLocation().equals(location))
+                return cell;
+        }
+        return null;
+    }
+
+
+    /**
      * Returns the number of cells in the region
      *
      * @return number of cells in the region
@@ -88,10 +105,11 @@ public abstract class GridRegion<T extends GridCell<?>> extends PuzzleElement<In
      * @param other Other region to check equivalence against
      * @return true iff this.regionCells.equals(other.regionCells)
      */
-    public boolean equals(StarBattleRegion other)
+    public boolean equals(GridRegion<T> other)
     {
         return getCellLocations().equals(other.getCellLocations());
     }
+
 
     /**
      * Returns a deep copy of the GridRegion

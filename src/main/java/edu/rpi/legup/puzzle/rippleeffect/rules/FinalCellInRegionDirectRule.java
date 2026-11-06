@@ -9,15 +9,15 @@ import edu.rpi.legup.puzzle.rippleeffect.RippleEffectBoard;
 import edu.rpi.legup.puzzle.rippleeffect.RippleEffectCell;
 import edu.rpi.legup.puzzle.rippleeffect.RippleEffectCellType;
 
-public class FinishRegionDirectRule extends DirectRule {
+public class FinalCellInRegionDirectRule extends DirectRule {
 
-    public FinishRegionDirectRule()
+    public FinalCellInRegionDirectRule()
     {
         super(
                 "RIPL-BASC-0001",
-                "Finish Region",
+                "Final Cell in Region",
                 "If only one number is missing from the region, fill it in.",
-                "edu/rpi/legup/images/rippleeffect/rules/FinishRegion.png"
+                "edu/rpi/legup/images/rippleeffect/rules/FinalCellInRegion.png"
         );
     }
 
