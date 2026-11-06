@@ -13,7 +13,6 @@ import edu.rpi.legup.model.GoalType;
 import edu.rpi.legup.model.Puzzle;
 import edu.rpi.legup.model.PuzzleExporter;
 import edu.rpi.legup.model.gameboard.Board;
-import edu.rpi.legup.model.gameboard.CaseBoard;
 import edu.rpi.legup.model.gameboard.GridBoard;
 import edu.rpi.legup.model.gameboard.GridCell;
 import edu.rpi.legup.model.gameboard.PuzzleElement;
@@ -22,6 +21,7 @@ import edu.rpi.legup.model.tree.TreeElement;
 import edu.rpi.legup.save.ExportFileException;
 import edu.rpi.legup.save.InvalidFileFormatException;
 import edu.rpi.legup.ui.boardview.BoardView;
+import edu.rpi.legup.ui.proofeditorui.rulesview.RuleFrame;
 import edu.rpi.legup.ui.puzzleeditorui.elementsview.ElementFrame;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -54,6 +54,7 @@ public class PuzzleEditorPanel extends LegupPanel implements IHistoryListener {
     private JToolBar toolBar1;
     private JToolBar toolBar2;
     private JFrame frame;
+    private RuleFrame ruleFrame;
     private JButton[] buttons;
     JSplitPane splitPanel;
     private JButton[] toolBar1Buttons;
@@ -216,9 +217,20 @@ public class PuzzleEditorPanel extends LegupPanel implements IHistoryListener {
         } else {
             exit.setAccelerator(KeyStroke.getKeyStroke('Q', InputEvent.CTRL_DOWN_MASK));
         }
+
+        // Implements the "Preferences" under "File"
+        JMenuItem preferences = new JMenuItem("Preferences");
+        preferences.addActionListener(
+                a -> {
+                    PreferencesDialog.CreateDialogForProofEditor(this.frame, this.ruleFrame);
+                });
+
         menus[0].add(openPuzzle);
         menus[0].add(createPuzzle);
         // menus[0].add(directSavePuzzle);
+        menus[0].addSeparator();
+        menus[0].add(preferences);
+        menus[0].addSeparator();
         menus[0].add(exit);
 
         // EDIT
@@ -784,7 +796,7 @@ public class PuzzleEditorPanel extends LegupPanel implements IHistoryListener {
                         }
 
                         @Override
-                        public void onCaseBoardAdded(CaseBoard caseBoard) {
+                        public void onCaseBoardAdded(Board caseBoard) {
                             // not relevant for goal text updates
                         }
 
