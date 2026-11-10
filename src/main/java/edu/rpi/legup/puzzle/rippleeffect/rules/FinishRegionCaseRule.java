@@ -27,7 +27,7 @@ public class FinishRegionCaseRule extends CaseRule {
 
     @Override
     public Board getApplicableLocationsBoard(Board board) {
-        RippleEffectBoard reBoard = (RippleEffectBoard) board;
+        RippleEffectBoard reBoard = (RippleEffectBoard) board.copy();
         reBoard.setCaseRule(this);
         reBoard.setModifiable(false);
         for (PuzzleElement element : reBoard.getPuzzleElements())
@@ -87,7 +87,13 @@ public class FinishRegionCaseRule extends CaseRule {
         }
 
         // Check for too many cases
-
+        int size = 0;
+        for (int i = missingNumsSet.size(); i > 0; --i)
+        {
+            size += i;
+            if (size > this.MAX_CASES)
+                return cases;
+        }
 
         // Create a new board for each permutation of values
         List<Integer> missingNums = new ArrayList<>(missingNumsSet);
@@ -96,8 +102,11 @@ public class FinishRegionCaseRule extends CaseRule {
         for (List<Integer> permutation : permutations)
         {
             RippleEffectBoard newBoard = reBoard.copy();
-            for (int i = 0; i < permutation.size(); ++i)
-                newBoard.getCell(unknownCells.get(i).getLocation()).setData(permutation.get(i));
+            for (int i = 0; i < permutation.size(); ++i) {
+                RippleEffectCell c = newBoard.getCell(unknownCells.get(i).getLocation());
+                c.setData(permutation.get(i));
+                newBoard.addModifiedData(c);
+            }
             cases.add(newBoard);
         }
         return cases;
