@@ -31,7 +31,6 @@ public class FinalCellInRegionDirectRule extends DirectRule {
         RippleEffectBoard origBoard = ((RippleEffectBoard) transition.getParents().getFirst().getBoard()).copy();
         RippleEffectCell origCell = (RippleEffectCell) origBoard.getPuzzleElement(puzzleElement);
         origCell.setData(newCell.getData());
-        origBoard.setCell(origCell.getLocation().x, origCell.getLocation().y, origCell);
         for (RippleEffectCell c : origBoard.getRegion(origCell).getCells())
         {
             if (c.getType() != RippleEffectCellType.NUMBER)
@@ -40,7 +39,7 @@ public class FinalCellInRegionDirectRule extends DirectRule {
             }
         }
 
-        EqualDigitsInRegionContradictionRule contraRule = new EqualDigitsInRegionContradictionRule();
+        DuplicateValueContradictionRule contraRule = new DuplicateValueContradictionRule();
         if (contraRule.checkContradictionAt(origBoard, puzzleElement) == null)
         {
             return super.getInvalidUseOfRuleMessage() + ": Cell value must be unique to the region";

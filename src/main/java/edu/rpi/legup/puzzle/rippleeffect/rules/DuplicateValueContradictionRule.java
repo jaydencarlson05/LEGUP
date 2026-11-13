@@ -8,13 +8,13 @@ import edu.rpi.legup.puzzle.rippleeffect.RippleEffectCell;
 import edu.rpi.legup.puzzle.rippleeffect.RippleEffectCellType;
 import edu.rpi.legup.puzzle.rippleeffect.RippleEffectRegion;
 
-public class EqualDigitsInRegionContradictionRule extends ContradictionRule {
+public class DuplicateValueContradictionRule extends ContradictionRule {
 
-    public EqualDigitsInRegionContradictionRule()
+    public DuplicateValueContradictionRule()
     {
         super(
                 "RIPL-CONT-0001",
-                "Equal Digits in Region",
+                "Duplicate Value",
                 "Two equal numbers exist in the same region",
                 "edu/rpi/legup/images/rippleeffect/contradictions/DuplicateNumber.png"
         );
